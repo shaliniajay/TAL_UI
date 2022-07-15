@@ -1,0 +1,84 @@
+
+<div class="row g-3">
+  <h1>
+    Premium Calculator
+</h1>
+</div>
+  <div class="container">
+    
+    <form class="row g-3" [formGroup]="premiumCalculatorForm">
+     
+        <div class="row tal-row">
+            <div class="col-3">
+              <label for="person-name" class="">Name</label>
+            </div>
+            <div class="col-3">
+                <input id="person-name" type="text" class="form-control" formControlName="name" required>
+            </div>
+            <div class="col-3 err-msg">
+              <span *ngIf=" premiumCalculatorForm.controls['occupation'].dirty && premiumCalculatorForm.controls['name'].errors?.['required']">Name is required</span>
+            </div>
+          </div>
+          <div class="row tal-row">
+            <div class="col-3">
+              <label for="dob" class="">Date Of Birth</label>
+            </div>
+            <div class="col-3">
+                <mat-form-field appearance="outline">
+                     <input matInput [max]="dateMaxDate" [min]="dateMinDate" readonly 
+                       [matDatepicker]="matDate3Picker" formControlName="dob" (dateChange)="calculateAge()"/>
+                     <mat-datepicker-toggle matSuffix [for]="matDate3Picker"></mat-datepicker-toggle>
+                    <mat-datepicker #matDate3Picker ></mat-datepicker>
+                    
+        <!--   <mat-error *ngIf="premiumCalculatorForm.get('dob').hasError('required')">
+           Valid date required.
+          </mat-error> -->
+                  </mat-form-field>
+            </div>
+            <div class="col-3 err-msg">
+              <span *ngIf=" premiumCalculatorForm.controls['occupation'].dirty && premiumCalculatorForm.controls['dob'].errors?.['required']">DOB is required</span>
+            </div>
+          </div>
+      <div class="row tal-row">
+        <div class="col-3">
+          <label for="age" class="">Age</label>
+        </div>
+        <div class="col-3">
+            <input id="age" type="text" class="form-control" formControlName="age" required>
+        </div>
+        <div class="col-3 err-msg">
+          <span *ngIf=" premiumCalculatorForm.controls['occupation'].dirty && premiumCalculatorForm.controls['age'].errors?.['min']">Age should be between 1 to 70</span>
+        </div>
+      </div>
+      <div class="row tal-row">
+        <div class="col-3">
+          <label for="insured-amount" class="">Death Sum Insured</label>
+        </div>
+        <div class="col-3">
+            <input id="insured-amount" type="text" class="form-control" formControlName="deathSumInsured" required>
+        </div>
+        <div class="col-3 err-msg">
+          <span *ngIf=" premiumCalculatorForm.controls['occupation'].dirty && premiumCalculatorForm.controls['deathSumInsured'].errors?.['min']">Sum should be in 10K to 1 million range </span>
+        </div>
+      </div>
+      <div class="row tal-row">
+        <div class="col-3">
+          <label for="occupation-name" class="">Occupation</label>
+        </div>
+        <div class="col-3">
+          <select name="occupation-name" class="form-select" formControlName="occupation" required (change)="calculatePremium()">
+            <option selected disabled value=0>Select occupation</option>
+            <option *ngFor="let occ of occupations" [value]="occ.OccupationFactorID">{{occ.Name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row tal-row">
+        <h2 *ngIf="premium>0">
+            Your Premium will be  {{premium}}
+          </h2>
+      </div>
+    
+    </form>
+ 
+    
+</div>
